@@ -264,6 +264,7 @@ Returns:     the return from the callout
 static int
 do_callout(heapframe *F, match_block *mb, PCRE2_SIZE *lengthptr)
 {
+  printf("\n\n\n\n\n\n\ndo_callout\n");
 int rc;
 PCRE2_SIZE save0, save1;
 PCRE2_SIZE *callout_ovector;
@@ -353,6 +354,7 @@ static int
 match_ref(PCRE2_SIZE offset, BOOL caseless, heapframe *F, match_block *mb,
   PCRE2_SIZE *lengthptr)
 {
+  printf("\n\n\n\n\n\nmatch_ref\n");
 PCRE2_SPTR p;
 PCRE2_SIZE length;
 PCRE2_SPTR eptr;
@@ -564,6 +566,7 @@ match(PCRE2_SPTR start_eptr, PCRE2_SPTR start_ecode, PCRE2_SIZE *ovector,
   uint16_t oveccount, uint16_t top_bracket, PCRE2_SIZE frame_size,
   match_block *mb)
 {
+printf("\n\n\n\n\n\nmatch\n");
 /* Frame-handling variables */
 
 heapframe *F;           /* Current frame pointer */
@@ -722,6 +725,7 @@ if (group_frame_type != 0)
 many backtracks (search tree is too large), or that we haven't exceeded the
 recursive depth limit (used too many backtracking frames). If not, process the
 opcodes. */
+
 
 if (mb->match_call_count++ >= mb->match_limit) return PCRE2_ERROR_MATCHLIMIT;
 if (Frdepth >= mb->match_limit_depth) return PCRE2_ERROR_DEPTHLIMIT;
@@ -5983,6 +5987,7 @@ pcre2_match(const pcre2_code *code, PCRE2_SPTR subject, PCRE2_SIZE length,
   PCRE2_SIZE start_offset, uint32_t options, pcre2_match_data *match_data,
   pcre2_match_context *mcontext)
 {
+  printf("\n\n\n\n\n\n\n5982line\n");
 int rc;
 const uint8_t *start_bits = NULL;
 
@@ -6153,6 +6158,7 @@ if (re->executable_jit != NULL && (options & ~PUBLIC_JIT_MATCH_OPTIONS) == 0)
   {
   rc = pcre2_jit_match(code, subject, length, start_offset, options,
     match_data, mcontext);
+  printf("\n\n\n\n\n\npcrew2_match 6161\n");
   if (rc != PCRE2_ERROR_JIT_BADOPTION) return rc;
   }
 #endif
@@ -6666,6 +6672,7 @@ for(;;)
 
   rc = match(start_match, mb->start_code, match_data->ovector,
     match_data->oveccount, re->top_bracket, frame_size, mb);
+  return -10101011;
 
   if (mb->hitend && start_partial == NULL)
     {

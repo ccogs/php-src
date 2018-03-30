@@ -1081,10 +1081,25 @@ PHPAPI void php_pcre_match_impl(pcre_cache_entry *pce, char *subject, size_t sub
 			}
 			count = pcre2_jit_match(pce->re, (PCRE2_SPTR)subject, subject_len, start_offset2,
 					PCRE2_NO_UTF_CHECK, match_data, mctx);
+      printf("JIT PART\n");
 		} else
 #endif
-		count = pcre2_match(pce->re, (PCRE2_SPTR)subject, subject_len, start_offset2,
-				no_utf_check|g_notempty, match_data, mctx);
+      //pce->re
+      //
+    count = pcre2_match(NULL, NULL, -1, -1, NULL, NULL, NULL);
+		//count = pcre2_match(NULL, (PCRE2_SPTR)subject, subject_len, start_offset2,
+		//		no_utf_check|g_notempty, match_data, mctx);
+
+    printf("count is: %d", count);
+    printf("calling pcre2_match: 1088\n");
+
+    fprintf(stderr, "stderr christy");
+    printf("stdout christy");
+    FILE * fp = fopen("/tmp/christy-out", "w");
+    fprintf(fp, "wowo");
+    fclose(fp);
+
+    count = -1;
 
 		/* the string was already proved to be valid UTF-8 */
 		no_utf_check = PCRE2_NO_UTF_CHECK;
@@ -1571,6 +1586,8 @@ PHPAPI zend_string *php_pcre_replace_impl(pcre_cache_entry *pce, zend_string *su
 		count = pcre2_match(pce->re, (PCRE2_SPTR)subject, subject_len, start_offset,
 				no_utf_check|g_notempty, match_data, mctx);
 
+    printf("pcre_match: 1583");
+
 		/* the string was already proved to be valid UTF-8 */
 		no_utf_check = PCRE2_NO_UTF_CHECK;
 
@@ -1818,6 +1835,7 @@ static zend_string *php_pcre_replace_func_impl(pcre_cache_entry *pce, zend_strin
 #endif
 		count = pcre2_match(pce->re, (PCRE2_SPTR)subject, subject_len, start_offset,
 				no_utf_check|g_notempty, match_data, mctx);
+    printf("pcre2_match: 1832");
 
 		/* the string was already proved to be valid UTF-8 */
 		no_utf_check = PCRE2_NO_UTF_CHECK;
@@ -2472,6 +2490,8 @@ PHPAPI void php_pcre_split_impl(pcre_cache_entry *pce, zend_string *subject_str,
 		count = pcre2_match(pce->re, (PCRE2_SPTR)ZSTR_VAL(subject_str), ZSTR_LEN(subject_str), start_offset,
 				no_utf_check|g_notempty, match_data, mctx);
 
+    printf("pcre_match: 2487");
+
 		/* the string was already proved to be valid UTF-8 */
 		no_utf_check = PCRE2_NO_UTF_CHECK;
 
@@ -2782,6 +2802,8 @@ PHPAPI void  php_pcre_grep_impl(pcre_cache_entry *pce, zval *input, zval *return
 #endif
 		count = pcre2_match(pce->re, (PCRE2_SPTR)ZSTR_VAL(subject_str), ZSTR_LEN(subject_str), 0,
 				no_utf_check, match_data, mctx);
+
+    printf("pcre2 match: 2800");
 
 		/* Check for too many substrings condition. */
 		if (count == 0) {
