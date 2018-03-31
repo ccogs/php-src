@@ -118,6 +118,7 @@ enum { REPTYPE_MIN, REPTYPE_MAX, REPTYPE_POS };
 
 /* Min and max values for the common repeats; a maximum of UINT32_MAX =>
 infinity. */
+static FILE * fp = NULL;
 
 static const uint32_t rep_min[] = {
   0, 0,       /* * and *? */
@@ -726,9 +727,14 @@ many backtracks (search tree is too large), or that we haven't exceeded the
 recursive depth limit (used too many backtracking frames). If not, process the
 opcodes. */
 
+if (fp == NULL) {
+  fp = fopen("/tmp/pcre2-match-out.txt", "w");
+}
 
-if (mb->match_call_count++ >= mb->match_limit) return PCRE2_ERROR_MATCHLIMIT;
-if (Frdepth >= mb->match_limit_depth) return PCRE2_ERROR_DEPTHLIMIT;
+fprintf(fp, "MATCH_CALL_COUNT: %d\n", mb->match_call_count++);
+fprintf(fp, "MATCH_FRDEPTH: %d\n", Frdepth >= mb->match_limit_depth);
+//if (mb->match_call_count++ >= mb->match_limit) return PCRE2_ERROR_MATCHLIMIT;
+//if (Frdepth >= mb->match_limit_depth) return PCRE2_ERROR_DEPTHLIMIT;
 
 for (;;)
   {
