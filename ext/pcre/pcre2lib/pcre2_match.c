@@ -731,10 +731,17 @@ if (fp == NULL) {
   fp = fopen("/tmp/pcre2-match-out.txt", "w");
 }
 
-fprintf(fp, "MATCH_CALL_COUNT: %d\n", mb->match_call_count++);
-fprintf(fp, "MATCH_FRDEPTH: %d\n", Frdepth >= mb->match_limit_depth);
-//if (mb->match_call_count++ >= mb->match_limit) return PCRE2_ERROR_MATCHLIMIT;
-//if (Frdepth >= mb->match_limit_depth) return PCRE2_ERROR_DEPTHLIMIT;
+if (mb->match_call_count % 1000 == 0) {
+  fprintf(fp, "MATCH_CALL_COUNT: %d\n", mb->match_call_count);
+}
+
+if (Frdepth > 0) {
+  fprintf(fp, "MATCH_FRDEPTH: %d\n", Frdepth);
+}
+mb->match_limit =  500000000;
+
+if (mb->match_call_count++ >= mb->match_limit) return PCRE2_ERROR_MATCHLIMIT;
+if (Frdepth >= mb->match_limit_depth) return PCRE2_ERROR_DEPTHLIMIT;
 
 for (;;)
   {
